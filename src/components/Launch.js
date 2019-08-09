@@ -36,6 +36,7 @@ export class Launch extends Component {
               flight_number,
               launch_year,
               launch_success,
+              launch_date_local,
               rocket: { rocket_id, rocket_name, rocket_type }
             } = data.launch;
             return (
@@ -57,13 +58,36 @@ export class Launch extends Component {
                     <span
                       className={classNames({
                         "text-success": launch_success,
-                        "text-danger": !launch_success
+                        "text-danger":
+                          !launch_success &&
+                          new Date() >= new Date(launch_date_local),
+                        "text-warning":
+                          !launch_success &&
+                          new Date() < new Date(launch_date_local)
                       })}
                     >
-                      {launch_success ? "Yes" : "No"}
+                      {launch_success
+                        ? "Yes"
+                        : new Date() < new Date(launch_date_local)
+                        ? "Pending"
+                        : "No"}
                     </span>
                   </li>
                 </ul>
+                <h4 className="my-3">Rocket Details</h4>
+                <ul className="list-group">
+                  <li className="list-group-item">Rocket ID: {rocket_id}</li>
+                  <li className="list-group-item">
+                    Rocket Name: {rocket_name}
+                  </li>
+                  <li className="list-group-item">
+                    Rocket Type: {rocket_type}
+                  </li>
+                </ul>
+                <hr />
+                <Link to="/" className="btn btn-secondary">
+                  Back
+                </Link>
               </div>
             );
           }}

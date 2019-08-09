@@ -27,9 +27,15 @@ export class Launches extends Component {
             if (error) console.log(error);
             return (
               <Fragment>
-                {data.launches.map(launch => (
-                  <LaunchItem key={launch.flight_number} launch={launch} />
-                ))}
+                {data.launches
+                  .sort(
+                    (a, b) =>
+                      new Date(b.launch_date_local) -
+                      new Date(a.launch_date_local)
+                  )
+                  .map(launch => (
+                    <LaunchItem key={launch.flight_number} launch={launch} />
+                  ))}
               </Fragment>
             );
           }}

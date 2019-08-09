@@ -15,7 +15,10 @@ export default function LaunchItem({
             <span
               className={classNames({
                 "text-success": launch_success,
-                "text-danger": !launch_success
+                "text-danger":
+                  !launch_success && new Date(launch_date_local) <= new Date(),
+                "text-warning":
+                  !launch_success && new Date(launch_date_local) >= new Date()
               })}
             >
               {mission_name}
